@@ -71,12 +71,22 @@ class MgSender:
     @asyncio.coroutine
     def _send_acknowledgement(self, to, rpl):
         config = self.config[to]
+        d = dict()
         logging.info('Sending acknowledgement: {} {}'.format(to, rpl))
+
+        data = {
+            "to": [rpl],
+            "from": config['from'],
+            "subject": config['subject'],
+            "text": config.get('text', ''),
+            "html": config.get('html', '')
+        }
+
         resp = yield from request(
             method='POST',
             url=self.mg_api_endpoint.format(config['domain']),
             auth=self.auth,
-            data={"to": [rpl], "from": config['from'], "subject": config['subject'], "text": config['text']}
+            data=data
         )
         response = yield from resp.read()
         if resp.status == 200:

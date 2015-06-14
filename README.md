@@ -35,7 +35,7 @@ senders:
     domain: yourdomain.com
     from: no-reply@yourdomain.com
     subject: Thanks for reaching out!
-    text: |
+    html: |
         <h3> Thanks for reaching out! </h3>
         <p> Someone will contact you shortly about your inquiry.</p>
         - The YourCompany Team
