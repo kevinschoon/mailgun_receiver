@@ -12,7 +12,6 @@ import dbm
 from yaml import load
 from aiohttp import web, request, BasicAuth
 
-logging.basicConfig(level='INFO')
 logger = logging.getLogger(__name__)
 
 
@@ -181,7 +180,10 @@ def main():
     parser.add_argument('-a', '--api_key', default=os.getenv('MAILGUN_API_KEY'))
     parser.add_argument('-d', '--db_path', default='mg.db')
     parser.add_argument('-c', '--cfg', default='mg.yml')
+    parser.add_argument('-l', '--level', default='INFO')
     args = parser.parse_args()
+
+    logging.basicConfig(level=args.level, format='%(asctime)s - %(levelname)s - %(name)s.%(module)s - %(message)s')
 
     with open(args.cfg) as fp:
         config = load(fp.read())
